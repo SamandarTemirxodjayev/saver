@@ -2,9 +2,24 @@ const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 const multer = require("multer");
 const Files = require("../models/Files");
+const os = require('os');
 
 exports.index = async (req, res) => {
-  res.json({ message: 'Storage UIS Team', version: '1.0.0'});
+  const serverIP = getServerIP();
+  res.json({ message: 'Storage UIS Team', version: '1.0.0', serverIP });
+};
+
+function getServerIP() {
+  const interfaces = os.networkInterfaces();
+  for (const interfaceName in interfaces) {
+    const interfaceInfo = interfaces[interfaceName];
+    for (const interface of interfaceInfo) {
+      if (interface.family === 'IPv4' && !interface.internal) {
+        return interface.address;
+      }
+    }
+  }
+  return 'Unknown';
 }
 exports.upload = async (req, res) => {
   try {
