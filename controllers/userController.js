@@ -1,26 +1,11 @@
-const { v4: uuidv4 } = require("uuid");
+const { v1: uuidv4 } = require("uuid");
 const path = require("path");
 const multer = require("multer");
 const Files = require("../models/Files");
-const os = require('os');
 
 exports.index = async (req, res) => {
-  const serverIP = getServerIP();
-  res.json({ message: 'Storage UIS Team', version: '1.0.0', serverIP });
+  res.json({ message: 'Storage UIS Team', version: '1.0.0' });
 };
-
-function getServerIP() {
-  const interfaces = os.networkInterfaces();
-  for (const interfaceName in interfaces) {
-    const interfaceInfo = interfaces[interfaceName];
-    for (const interface of interfaceInfo) {
-      if (interface.family === 'IPv4' && !interface.internal) {
-        return interface.address;
-      }
-    }
-  }
-  return 'Unknown';
-}
 exports.upload = async (req, res) => {
   try {
     const publicFolderPath = `./public/${req.params.name}`;
@@ -49,7 +34,7 @@ exports.upload = async (req, res) => {
       const fileName = req.file.filename;
       const fileId = path.basename(req.file.filename, path.extname(req.file.filename)); // Get the newly generated filename
       
-      const fileUrl = `https://empower.uz/${req.params.name}/${fileName}`;
+      const fileUrl = `http://94.190.152.29:3333/${req.params.name}/${fileName}`;
 
       const files = await new Files({
         user: req.params.name,
