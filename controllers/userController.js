@@ -34,7 +34,7 @@ exports.upload = async (req, res) => {
       const fileName = req.file.filename;
       const fileId = path.basename(req.file.filename, path.extname(req.file.filename)); // Get the newly generated filename
       
-      const fileUrl = `http://194.190.152.29:3333/${req.params.name}/${fileName}`;
+      const fileUrl = `https:/empower.uz/${req.params.name}/${fileName}`;
 
       const files = await new Files({
         user: req.params.name,
