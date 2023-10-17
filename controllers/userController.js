@@ -44,7 +44,7 @@ exports.upload = async (req, res) => {
       });
       await files.save();
 
-      return res.status(200).json({ message: 'File uploaded', fileName, fileId, fileUrl });
+      return res.status(200).json({ message: 'File uploaded', fileName, fileId, fileUrl, storeId: req.params.name, createdAt: new Date() });
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
